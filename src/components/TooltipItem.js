@@ -1,7 +1,7 @@
 import {AppBar, Button, IconButton, Toolbar, Typography} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
-const Sidebar = () => {
+const TooltipItem = () => {
     return (<>
         <AppBar positionn='static'>
             <Toolbar>
@@ -24,4 +24,4 @@ const Sidebar = () => {
         </AppBar>
     </>)
 }
-export default Sidebar;
+export default TooltipItem;
