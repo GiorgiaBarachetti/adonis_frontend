@@ -1,9 +1,8 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Profile from "../../pages/doctor/Doctor";
-import MainLayout from "../../pages/MainLayout";
 import Form from "../../components/Form";
 import MedicalVisitHistory from "../../pages/medical-visit-history/MedicalVisitHistory";
-import SignInForm from "../../components/SignInForm";
+import SignInForm from "../../pages/sign_in/SignInForm";
 
 const AppRoutes = () => {
     return (

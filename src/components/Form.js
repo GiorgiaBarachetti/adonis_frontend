@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Box, Button, MenuItem, TextField} from "@mui/material";
+import TooltipItem from "./TooltipItem";
 
 const Form = () => {
     const [formData, setFormData] = useState({});
@@ -11,6 +12,7 @@ const Form = () => {
             ...prevData,
             [name]: value,
         }));
+        console.log(e)
     };
 
     // Handler function to submit form data
@@ -27,122 +29,125 @@ const Form = () => {
     const doctorOptions = ["Dr. Smith", "Dr. Johnson", "Dr. Williams"];
 
     return (
-        <Box
-            component="form"
-            sx={{
-                "& .MuiTextField-root": {m: 1, width: "25ch"},
-            }}
-            noValidate
-            autoComplete="off"
-            onSubmit={handleSubmit}
-        >
-            {/* First inputData */}
-            <Box>
-                <Box>Informazioni personali</Box>
+        <>
+            <TooltipItem/>
+            <Box
+                component="form"
+                sx={{
+                    "& .MuiTextField-root": {m: 1, width: "25ch"},
+                }}
+                noValidate
+                autoComplete="off"
+                onSubmit={handleSubmit}
+            >
+                {/* First inputData */}
                 <Box>
-                    <TextField
-                        name="name"
-                        required
-                        label="Nome"
-                        value={formData.name || ""}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        name="surname"
-                        required
-                        label="Cognome"
-                        value={formData.surname || ""}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        name="phoneNumber"
-                        required
-                        label="Numero di telefono"
-                        value={formData.phoneNumber || ""}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        name="fiscalCode"
-                        required
-                        label="Fiscal Code"
-                        value={formData.fiscalCode || ""}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        name="dateOfBirth"
-                        required
-                        label="Date of Birth"
-                        type="date"
-                        value={formData.dateOfBirth || ""}
-                        onChange={handleChange}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                    <TextField
-                        name="email"
-                        required
-                        label="Email"
-                        type="email"
-                        value={formData.email || ""}
-                        onChange={handleChange}
-                    />
+                    <Box>Informazioni personali</Box>
+                    <Box>
+                        <TextField
+                            name="name"
+                            required
+                            label="Nome"
+                            value={formData.name || ""}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            name="surname"
+                            required
+                            label="Cognome"
+                            value={formData.surname || ""}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            name="phoneNumber"
+                            required
+                            label="Numero di telefono"
+                            value={formData.phoneNumber || ""}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            name="fiscalCode"
+                            required
+                            label="Codice fiscale"
+                            value={formData.fiscalCode || ""}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            name="dateOfBirth"
+                            required
+                            label="Data di nascita"
+                            type="date"
+                            value={formData.dateOfBirth || ""}
+                            onChange={handleChange}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                        <TextField
+                            name="email"
+                            required
+                            label="Email"
+                            type="email"
+                            value={formData.email || ""}
+                            onChange={handleChange}
+                        />
+                    </Box>
                 </Box>
-            </Box>
 
-            {/* Second inputData */}
-            <Box>
-                <Box>Appointment Details</Box>
+                {/* Second inputData */}
                 <Box>
-                    <TextField
-                        select
-                        name="purpose"
-                        required
-                        label="Purpose"
-                        value={formData.purpose || ""}
-                        onChange={handleChange}
-                    >
-                        {purposeOptions.map((option, index) => (
-                            <MenuItem key={index} value={option}>{option}</MenuItem>
-                        ))}
-                    </TextField>
-                    <TextField
-                        name="appointmentDate"
-                        required
-                        label="Appointment Date"
-                        type="date"
-                        value={formData.appointmentDate || ""}
-                        onChange={handleChange}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                    <TextField
-                        select
-                        name="doctor"
-                        required
-                        label="Doctor"
-                        value={formData.doctor || ""}
-                        onChange={handleChange}
-                    >
-                        {doctorOptions.map((option, index) => (
-                            <MenuItem key={index} value={option}>{option}</MenuItem>
-                        ))}
-                    </TextField>
-                    <TextField
-                        name="details"
-                        required
-                        label="Details"
-                        multiline
-                        rows={4}
-                        value={formData.details || ""}
-                        onChange={handleChange}
-                    />
+                    <Box>Appointment Details</Box>
+                    <Box>
+                        <TextField
+                            select
+                            name="purpose"
+                            required
+                            label="Scopo"
+                            value={formData.purpose || ""}
+                            onChange={handleChange}
+                        >
+                            {purposeOptions.map((option, index) => (
+                                <MenuItem key={index} value={option}>{option}</MenuItem>
+                            ))}
+                        </TextField>
+                        <TextField
+                            name="appointmentDate"
+                            required
+                            label="Data appuntamento"
+                            type="date"
+                            value={formData.appointmentDate || ""}
+                            onChange={handleChange}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                        <TextField
+                            select
+                            name="doctor"
+                            required
+                            label="Dottore"
+                            value={formData.doctor || ""}
+                            onChange={handleChange}
+                        >
+                            {doctorOptions.map((option, index) => (
+                                <MenuItem key={index} value={option}>{option}</MenuItem>
+                            ))}
+                        </TextField>
+                        <TextField
+                            name="details"
+                            required
+                            label="Dettagli"
+                            multiline
+                            rows={4}
+                            value={formData.details || ""}
+                            onChange={handleChange}
+                        />
+                    </Box>
                 </Box>
-            </Box>
 
-            <Button type="submit">Submit</Button>
-        </Box>
+                <Button type="submit">Submit</Button>
+            </Box>
+        </>
     );
 };
 

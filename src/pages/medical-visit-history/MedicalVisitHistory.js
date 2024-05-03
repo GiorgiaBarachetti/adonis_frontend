@@ -1,12 +1,12 @@
-import { useState } from "react";
-import Form from "../../components/Form";
+import {useState} from "react";
 import GeneralTable from "../../components/GeneralTable";
-import { Button } from "@mui/material";
+import TooltipItem from "../../components/TooltipItem";
+import axios from "axios";
 
 const MedicalVisitHistory = () => {
     const [open, setOpen] = useState(false)
-    
-    const handleClickNew = ()=>{
+
+    const handleClickNew = () => {
         setOpen(true)
     }
 
@@ -44,19 +44,24 @@ const MedicalVisitHistory = () => {
         },
     ];
 //if user role = doctor show doctor else patient
-const inputData = [
-    {
-      title: "DATI UTENTE",
-      fields: [
-        { label: "Name", required: true },
-        { label: "Surname", required: true },
-        { label: "Age", required: true },
-      ],
-    },
-  ];
+    const inputData = [
+        {
+            title: "DATI UTENTE",
+            fields: [
+                {label: "Name", required: true},
+                {label: "Surname", required: true},
+                {label: "Age", required: true},
+            ],
+        },
+    ];
+
+    const getItem = async () => {
+        await axios.get()
+    }
     return (<>
-    <Button onClick={handleClickNew}>New</Button>
-    <Form open={open} inputData={inputData} />
+        {/*<Button onClick={handleClickNew}>New</Button>*/}
+        {/*<Form open={open} inputData={inputData} />*/}
+        <TooltipItem/>
         <GeneralTable columns={columnsDoctor} rows={rowsDoctor}/></>)
 }
 export default MedicalVisitHistory

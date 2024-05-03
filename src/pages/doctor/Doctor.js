@@ -50,19 +50,19 @@ const Doctor = () => {
         telephoneNumber: '+1 123 456 7890',
     }
 
-    const inputData = [{label: 'name', required: true}, {label: 'surname', required: true}]
-    const handleButtonClick = () => {
-        navigate("/book-appointment", {state: {inputData}});
-    };
+    // const inputData = [{label: 'name', required: true}, {label: 'surname', required: true}]
+    // const handleButtonClick = () => {
+    //     navigate("/book-appointment", {state: {inputData}});
+    // };
 
     // https://codesandbox.io/p/sandbox/64331095cant-add-a-button-to-every-row-in-material-ui-table-vmnd9?file=%2Fdemo.tsx%3A7%2C17
     return (<>
         <TooltipItem
             title={'Benvenuto dottore ' + doctorData?.name + ' ' + doctorData?.surname}
             buttonTitle1={'Visite mediche'}
-            route1={handleButtonClick}
+            route1={'/medical-visit-history'}
             buttonTitle2={'Prenota visita medica'}
-            route2={'/medical-visit-history'}
+            route2={'/book-appointment'}
         />
         <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
             <IdentityCard fields={doctorData}/>
