@@ -1,7 +1,8 @@
 import IdentityCard from "../../components/IdentityCard";
 import GeneralTable from "../../components/GeneralTable";
-import {Box, Button} from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import {Box} from "@mui/material";
+import {Outlet, useNavigate} from "react-router-dom";
+import TooltipItem from "../../components/TooltipItem";
 
 const Doctor = () => {
     const navigate = useNavigate()
@@ -49,15 +50,29 @@ const Doctor = () => {
         telephoneNumber: '+1 123 456 7890',
     }
 
+    const inputData = [{label: 'name', required: true}, {label: 'surname', required: true}]
+    const handleButtonClick = () => {
+        navigate("/book-appointment", {state: {inputData}});
+    };
+
     // https://codesandbox.io/p/sandbox/64331095cant-add-a-button-to-every-row-in-material-ui-table-vmnd9?file=%2Fdemo.tsx%3A7%2C17
     return (<>
+        <TooltipItem
+            title={'Benvenuto dottore ' + doctorData?.name + ' ' + doctorData?.surname}
+            buttonTitle1={'Visite mediche'}
+            route1={handleButtonClick}
+            buttonTitle2={'Prenota visita medica'}
+            route2={'/medical-visit-history'}
+        />
         <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
             <IdentityCard fields={doctorData}/>
             <GeneralTable columns={columnsDoctor} rows={rowsDoctor}/>
         </Box>
         {/*<Button onClick={() => getItem()}>get</Button>*/}
-        <Button onClick={() => navigate('/book-appointment')}>book appointment</Button>
-        <Button onClick={() => navigate('/medical-visit-history')}>medical-visit-history</Button>
+        {/*<Button onClick={() => navigate('/book-appointment')}>book appointment</Button>*/}
+        {/*<Button onClick={() => navigate('/medical-visit-history')}>medical-visit-history</Button>*/}
+        {/* <Button onClick={handleButtonClick}>Go to Form</Button> */}
+        <Outlet/>
     </>)
 }
 

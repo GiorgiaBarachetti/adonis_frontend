@@ -1,6 +1,14 @@
+import { useState } from "react";
+import Form from "../../components/Form";
 import GeneralTable from "../../components/GeneralTable";
+import { Button } from "@mui/material";
 
 const MedicalVisitHistory = () => {
+    const [open, setOpen] = useState(false)
+    
+    const handleClickNew = ()=>{
+        setOpen(true)
+    }
 
     const columnsDoctor = [
         {id: 'patient', label: 'Nome Paziente', align: 'left'},
@@ -35,7 +43,20 @@ const MedicalVisitHistory = () => {
             status: 'Confermato'
         },
     ];
-
-    return (<><GeneralTable columns={columnsDoctor} rows={rowsDoctor}/></>)
+//if user role = doctor show doctor else patient
+const inputData = [
+    {
+      title: "DATI UTENTE",
+      fields: [
+        { label: "Name", required: true },
+        { label: "Surname", required: true },
+        { label: "Age", required: true },
+      ],
+    },
+  ];
+    return (<>
+    <Button onClick={handleClickNew}>New</Button>
+    <Form open={open} inputData={inputData} />
+        <GeneralTable columns={columnsDoctor} rows={rowsDoctor}/></>)
 }
 export default MedicalVisitHistory
