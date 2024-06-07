@@ -132,13 +132,6 @@ export default function SignInForm() {
                     <TextField required id="picture" label="Picture" type='file' variant='outlined'  InputLabelProps={{
                         shrink: true,
                     }} onChange={(e)=>{setValues({...values, picture: e.target.value})}} value={values.picture}/>
-                    <TextField required id="specialization" label="Specialization" type='text' variant='outlined' onChange={(e)=>{setValues({...values, specialization: e.target.value})}} value={values.specialization}/>
-                </CardMedia>
-
-
-                <CardMedia
-                    sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '20px'}}>
-                    <TextField required id="clinic_number" label="Clinic number" type='number' variant='outlined' onChange={(e)=>{setValues({...values, clinic_number: e.target.value})}} value={values.clinic_number}/>
                 </CardMedia>
 
                 <CardMedia sx={{
