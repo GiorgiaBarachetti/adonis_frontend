@@ -5,10 +5,12 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
+import {DATE_FORMAT, fromISOToFormat} from "../../utils/const";
 import {Box, Button, Card, CardHeader, CardMedia, Divider, Typography} from "@mui/material";
 
 export default function SignInForm() {
-    const [type, setType] = useState('');
+    const navigate = useNavigate();
     const [values, setValues] = useState({
         name:'',
         surname:'', 
@@ -27,12 +29,10 @@ export default function SignInForm() {
         specalization:'',
         clinic_number:''
     })
-    const handleSelectChange = (event) => {
-        const { name, value } = event.target;
-        setValues({ ...values, [name]: value });
-        if (name === 'type') {
-            setType(value);
-        }
+    
+    const goToHomepage = () => {
+        navigate("/");
+        // history.replace("/book-appointment");
     };
     
     const addPost = () =>{
@@ -57,6 +57,7 @@ export default function SignInForm() {
         })
         .then((res) => {
           setValues({...values, title:'',content:''})
+          goToHomepage()
         })
         .catch((err) => {
           console.log(err)
@@ -94,7 +95,7 @@ export default function SignInForm() {
 
                     <div>
                         <InputLabel id="type_label">Tipo di utente</InputLabel>
-                        <Select labelId='type_label' label="Tipo di utente" onChange={(e)=>{setValues({...values, type: e.target.value})}} value={values.type}>
+                        <Select labelId='type_label' label="Tipo di utente" onChange={(e) => { setValues({ ...values, type: e.target.value }) }} value={values.type}>
                             <MenuItem value={'dottore'}>Dottore</MenuItem>
                             <MenuItem value={'paziente'}>Paziente</MenuItem>
                         </Select>
@@ -134,10 +135,10 @@ export default function SignInForm() {
                     marginTop: '20px',
                     marginBottom: '20px'
                 }}>
-                    {type === "Dottore" && (
+                    {values.type === 'dottore' && (
                         <>
-                            <TextField id="specalization" label="Specializzazione" variant='outlined'/>
-                            <TextField id="clinicNumber" label="Numero Clinica" type="number" variant='outlined'/>
+                            <TextField id="specalization" label="Specializzazione" variant='outlined' onChange={(e)=>{setValues({...values, specalization: e.target.value})}} value={values.specalization}/>
+                            <TextField id="clinicNumber" label="Numero Clinica" type="number" variant='outlined' onChange={(e)=>{setValues({...values, clinic_number: e.target.value})}} value={values.clinic_number}/>
                         </>
                     )}
                 </CardMedia>
