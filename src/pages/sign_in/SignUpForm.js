@@ -128,6 +128,13 @@ export default function SignInForm() {
                     <TextField required id="password" label="Password" type='password' variant='outlined' onChange={(e)=>{setValues({...values, password: e.target.value})}} value={values.password}/>
                 </CardMedia>
 
+                <CardMedia
+                    sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '20px'}}>
+                    <TextField required id="picture" label="Picture" type='file' variant='outlined'  InputLabelProps={{
+                        shrink: true,
+                    }} onChange={(e)=>{setValues({...values, picture: e.target.value})}} value={values.picture}/>
+                </CardMedia>
+
                 <CardMedia sx={{
                     display: 'flex',
                     flexDirection: 'row',
