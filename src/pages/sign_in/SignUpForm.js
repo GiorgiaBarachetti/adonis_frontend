@@ -1,21 +1,63 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
+import { useEffect, useState } from "react"
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import axios from "axios";
 import {Box, Card, CardHeader, CardMedia, Divider, Typography} from "@mui/material";
 
 export default function SignInForm() {
-    const [type, setType] = React.useState('');
-    const [sex, setSex] = React.useState('')
+    const [type, setType] = useState('');
+    const [values, setValues] = useState({
+        name:'',
+        surname:'', 
+        sex:'',
+        height:'',
+        taxIdCode:'',
+        telephoneNumber:'',
+        birthDate:'',
+        birthPlace:'', 
+        nationality:'', 
+        address:'', 
+        type:'', 
+        email:'', 
+        password:'',
+        picture:'',
+        specalization:'',
+        clinic_number:''
+    })
+    const addPost = () =>{
+        axios.post("http://localhost:3333/registration", {
+            name: values.name,
+            surname: values.surname,
+            sex: values.sex,
+            height: values.height,
+            taxIdCode: values.taxIdCode,
+            telephoneNumber: values.telephoneNumber,
+            birthDate: values.birthDate,
+            birthPlace: values.birthPlace,
+            nationality: values.nationality,
+            address: values.address,
+            type: values.type,
+            email: values.email,
+            password: values.password,
+            picture: values.picture,
+            specalization: values.specalization,
+            clinic_number: values.clinic_number
 
-    const changeHandel = (event) => {
-        setSex(event.target.value)
-    };
+        })
+        .then((res) => {
+          setValues({...values, title:'',content:''})
+    
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }
+      useEffect(() => {
+      })
 
-    const handleChange = (event) => {
-        setType(event.target.value);
-    };
     return (
 
         <Card sx={{margin: 'auto', width: '550px'}}>
@@ -35,7 +77,7 @@ export default function SignInForm() {
                     sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '20px'}}>
                     <div>
                         <InputLabel id="sex_label">Sesso</InputLabel>
-                        <Select labelId='sex_label' value={sex} label="Sesso" onChange={changeHandel}>
+                        <Select labelId='sex_label'  label="Sesso" >
                             <MenuItem value={'Maschio'}>Maschio</MenuItem>
                             <MenuItem value={'Femmina'}>Femmina</MenuItem>
                         </Select>
@@ -45,7 +87,7 @@ export default function SignInForm() {
 
                     <div>
                         <InputLabel id="type_label">Tipo di utente</InputLabel>
-                        <Select labelId='type_label' value={type} label="Tipo di utente" onChange={handleChange}>
+                        <Select labelId='type_label' label="Tipo di utente" >
                             <MenuItem value={'Dottore'}>Dottore</MenuItem>
                             <MenuItem value={'Paziente'}>Paziente</MenuItem>
                         </Select>
