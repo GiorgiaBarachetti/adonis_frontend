@@ -5,7 +5,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import axios from "axios";
-import {Box, Card, CardHeader, CardMedia, Divider, Typography} from "@mui/material";
+import {Box, Button, Card, CardHeader, CardMedia, Divider, Typography} from "@mui/material";
 
 export default function SignInForm() {
     const [type, setType] = useState('');
@@ -27,6 +27,14 @@ export default function SignInForm() {
         specalization:'',
         clinic_number:''
     })
+    const handleSelectChange = (event) => {
+        const { name, value } = event.target;
+        setValues({ ...values, [name]: value });
+        if (name === 'type') {
+            setType(value);
+        }
+    };
+    
     const addPost = () =>{
         axios.post("http://localhost:3333/registration", {
             name: values.name,
@@ -134,6 +142,18 @@ export default function SignInForm() {
                         </>
                     )}
                 </CardMedia>
+                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                    <Button 
+                        onClick={addPost}
+                        sx={{
+                            backgroundColor: '#93b6ef',
+                        }}
+                        variant="contained"
+                    >
+                        Submit
+                    </Button>
+                </Box>
+                
             </Box>
 
 
