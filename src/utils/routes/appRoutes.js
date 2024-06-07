@@ -3,6 +3,7 @@ import Profile from "../../pages/doctor/Profile";
 import Form from "../../components/Form";
 import MedicalVisitHistory from "../../pages/medical-visit-history/MedicalVisitHistory";
 import SignUpForm from "../../pages/sign_in/SignUpForm";
+import Login from "../../pages/login/Login";
 
 const AppRoutes = () => {
     return (
