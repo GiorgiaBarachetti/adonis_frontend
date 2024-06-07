@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import GeneralTable from "../../components/GeneralTable";
 import TooltipItem from "../../components/TooltipItem";
 import {useLocation, useNavigate} from "react-router-dom";
+import {Button} from "@mui/material";
 
 const MedicalVisitHistory = () => {
     const navigate = useNavigate()
@@ -82,12 +83,12 @@ const MedicalVisitHistory = () => {
         {/*<Button onClick={handleClickNew}>New</Button>*/}
         {/*<Form open={open} inputData={inputData} />*/}
         <TooltipItem/>
-        {/*{ userType === "Admin" ?*/}
-        {/*    <Button onClick={() => {*/}
-        {/*        goToForm()*/}
-        {/*    }}>AGGIUNGI UNA PRENOTAZIONE</Button>*/}
-        {/*    : */}
-        {/*}*/}
+        {userType.type === "dottore" ?
+            <Button onClick={() => {
+                goToForm()
+            }}>AGGIUNGI UNA PRENOTAZIONE</Button>
+            : 'copa'
+        }
         <GeneralTable columns={columnsDoctor} rows={rows}/></>)
 }
 export default MedicalVisitHistory
