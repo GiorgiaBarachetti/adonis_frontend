@@ -1,5 +1,5 @@
 import {Route, Routes} from "react-router-dom";
-import Profile from "../../pages/doctor/Doctor";
+import Profile from "../../pages/doctor/Profile";
 import Form from "../../components/Form";
 import MedicalVisitHistory from "../../pages/medical-visit-history/MedicalVisitHistory";
 import SignUpForm from "../../pages/sign_in/SignUpForm";
@@ -7,7 +7,8 @@ import SignUpForm from "../../pages/sign_in/SignUpForm";
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route path="/" element={<Profile/>}/>
+            <Route path="/" element={<Login/>}/>
+            <Route path="/profile" element={<Profile/>}/>
             <Route path="/book-appointment" element={<Form/>}/>
             <Route path="/medical-visit-history" element={<MedicalVisitHistory/>}/>
             {/*<Route path="/login" element={<Login/>}/>*/}

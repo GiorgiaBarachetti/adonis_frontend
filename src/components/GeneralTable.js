@@ -14,6 +14,15 @@ const GeneralTable = ({columns, rows}) => {
         setPage(0);
     };
 
+
+    // const getItem = async () => {
+    //     await axios.get('http://localhost:3333/booking/me')
+    //         .then((res) => {
+    //             console.log(res)
+    //         })
+    // }
+
+
     return (
         <div sx={{display: 'flex', flexDirection: 'column'}}>
             <TableContainer>
@@ -26,16 +35,16 @@ const GeneralTable = ({columns, rows}) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row) => (
-                                <TableRow key={row.name}>
-                                    {columns.map((column) => (
-                                        <TableCell key={column.id} align={column.align}>
-                                            {row[column.id]}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            ))}
+                        {/*{rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)*/}
+                        {rows?.map((row) => (
+                            <TableRow key={row.id}>
+                                {columns.map((column) => (
+                                    <TableCell key={column.id} align={column.align}>
+                                        {row[column.id]}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
             </TableContainer>

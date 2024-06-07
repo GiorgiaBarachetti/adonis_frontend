@@ -1,20 +1,33 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import GeneralTable from "../../components/GeneralTable";
 import TooltipItem from "../../components/TooltipItem";
-import axios from "axios";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const MedicalVisitHistory = () => {
+    const navigate = useNavigate()
     const [open, setOpen] = useState(false)
-
+    const location = useLocation();
+    const [rows, setRows] = useState([]);
     const handleClickNew = () => {
         setOpen(true)
     }
+    const [userType, setUserType] = useState('')
+    //
+    // const getBooking = async () => {
+    //     await axios.get('http://localhost:3333/booking/me', config)
+    //         .then((res) => {
+    //             console.log('res', res.data.data)
+    //             setRows(res.data.data)
+    //
+    //         })
+    // }
+    console.log('medicalhistory', rows)
 
     const columnsDoctor = [
-        {id: 'patient', label: 'Nome Paziente', align: 'left'},
-        {id: 'appointmentDay', label: 'Data visita', align: 'left'},
+        {id: 'patient_id', label: 'Nome Paziente', align: 'left'},
+        {id: 'appointment_day', label: 'Data visita', align: 'left'},
         // TODO enum --> crea variabili
-        {id: 'appointmentType', label: 'Tipologia', align: 'left'},
+        {id: 'appointment_type', label: 'Tipologia', align: 'left'},
         {id: 'details', label: 'Dettagli', align: 'left'},
         // TODO enum --> crea variabili
         {id: 'status', label: 'Stato', align: 'left'}
@@ -55,13 +68,26 @@ const MedicalVisitHistory = () => {
         },
     ];
 
-    const getItem = async () => {
-        await axios.get()
-    }
+    const goToForm = () => {
+        navigate("/book-appointment");
+    };
+
+    useEffect(() => {
+        setRows(location.state.rows)
+        setUserType(sessionStorage.getItem('user'))
+    })
+
+
     return (<>
         {/*<Button onClick={handleClickNew}>New</Button>*/}
         {/*<Form open={open} inputData={inputData} />*/}
         <TooltipItem/>
-        <GeneralTable columns={columnsDoctor} rows={rowsDoctor}/></>)
+        {/*{ userType === "Admin" ?*/}
+        {/*    <Button onClick={() => {*/}
+        {/*        goToForm()*/}
+        {/*    }}>AGGIUNGI UNA PRENOTAZIONE</Button>*/}
+        {/*    : */}
+        {/*}*/}
+        <GeneralTable columns={columnsDoctor} rows={rows}/></>)
 }
 export default MedicalVisitHistory
