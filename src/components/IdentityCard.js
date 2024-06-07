@@ -1,7 +1,7 @@
 import {Box, Card, CardContent, CardHeader, CardMedia, Divider, Typography} from "@mui/material";
 
 const IdentityCard = ({fields}) => {
-    
+
     // const item = {
     //     picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3PNNRDmwDV_an6mG4zJJyuV3ixJDdEDnIeq_jgXR_RmGHc4qGFI8Fkg2dPq3qcoD_ir0&usqp=CAU',
     //     name: undefined,
@@ -39,15 +39,15 @@ const IdentityCard = ({fields}) => {
                                 margin: '5px'
                             }}>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                                    <Typography>Nome</Typography>
+                                    <Typography sx={{color: 'grey'}}>Nome</Typography>
                                     <Typography>{fields.name}</Typography>
                                 </Box>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                                    <Typography>Cognome</Typography>
+                                    <Typography sx={{color: 'grey'}}>Cognome</Typography>
                                     <Typography>{fields.surname}</Typography>
                                 </Box>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                                    <Typography>Sesso</Typography>
+                                    <Typography sx={{color: 'grey'}}>Sesso</Typography>
                                     <Typography>{fields.sex}</Typography>
                                 </Box>
                             </Box>
@@ -58,11 +58,11 @@ const IdentityCard = ({fields}) => {
                                 margin: '5px'
                             }}>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                                    <Typography>Luogo e data di nascita</Typography>
-                                    <Typography>{fields.birthPlace} {fields.birthDate}</Typography>
+                                    <Typography sx={{color: 'grey'}}>Luogo e data di nascita</Typography>
+                                    <Typography>{fields.birth_place}, {fields.birth_date}</Typography>
                                 </Box>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                                    <Typography>Statura</Typography>
+                                    <Typography sx={{color: 'grey'}}>Statura</Typography>
                                     <Typography>{fields.height}</Typography>
                                 </Box>
                             </Box>
@@ -73,8 +73,8 @@ const IdentityCard = ({fields}) => {
                                 margin: '5px'
                             }}>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                                    <Typography>Codice fiscale</Typography>
-                                    <Typography>{fields.taxIdCode}</Typography>
+                                    <Typography sx={{color: 'grey'}}>Codice fiscale</Typography>
+                                    <Typography>{fields.tax_id_code}</Typography>
                                 </Box>
                             </Box>
                             <Box sx={{
@@ -84,15 +84,15 @@ const IdentityCard = ({fields}) => {
                                 margin: '5px'
                             }}>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                                    <Typography>Cittadinanza</Typography>
+                                    <Typography sx={{color: 'grey'}}>Cittadinanza</Typography>
                                     <Typography>{fields.nationality}</Typography>
                                 </Box>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                                    <Typography>Indirizzo</Typography>
+                                    <Typography sx={{color: 'grey'}}>Indirizzo</Typography>
                                     <Typography>{fields.address}</Typography>
                                 </Box>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                                    <Typography>Telefono</Typography>
+                                    <Typography sx={{color: 'grey'}}>Telefono</Typography>
                                     <Typography>{fields.telephoneNumber}</Typography>
                                 </Box>
                             </Box>
@@ -104,11 +104,11 @@ const IdentityCard = ({fields}) => {
                                 margin: '5px'
                             }}>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                                    <Typography>Specializzazione</Typography>
+                                    <Typography sx={{color: 'grey'}}>Specializzazione</Typography>
                                     <Typography>{fields.name}</Typography>
                                 </Box>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                                    <Typography>Ambulatorio</Typography>
+                                    <Typography sx={{color: 'grey'}}>Ambulatorio</Typography>
                                     <Typography>{fields.name}</Typography>
                                 </Box>
                             </Box>
