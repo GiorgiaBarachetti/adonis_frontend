@@ -57,7 +57,6 @@ export default function SignInForm() {
         })
         .then((res) => {
           setValues({...values, title:'',content:''})
-    
         })
         .catch((err) => {
           console.log(err)
@@ -77,8 +76,8 @@ export default function SignInForm() {
             <Box sx={{disaply: 'flex', flexDirection: 'column', width: '500px', marginX: 'auto'}}>
                 <CardMedia
                     sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: '20px'}}>
-                    <TextField required id="name" label="Nome" variant='outlined' onChange={(e)=>{setValues({...values, name: e.target.value})}} value={values.name}/>
-                    <TextField required id="surname" label="Cognome" variant='outlined' onChange={(e)=>{setValues({...values, name: e.target.value})}} value={values.surname}/>
+                    <TextField required id="nome" label="Nome" variant='outlined' onChange={(e)=>{setValues({...values, name: e.target.value})}} value={values.name}/>
+                    <TextField required id="surname" label="Cognome" variant='outlined' onChange={(e)=>{setValues({...values, surname: e.target.value})}} value={values.surname}/>
                 </CardMedia>
 
                 <CardMedia
@@ -86,8 +85,8 @@ export default function SignInForm() {
                     <div>
                         <InputLabel id="sex_label">Sesso</InputLabel>
                         <Select labelId='sex_label'  label="Sesso" onChange={(e)=>{setValues({...values, sex: e.target.value})}} value={values.sex}>
-                            <MenuItem value={'male'}>Maschio</MenuItem>
-                            <MenuItem value={'female'}>Femmina</MenuItem>
+                            <MenuItem value={'maschio'}>Maschio</MenuItem>
+                            <MenuItem value={'femmina'}>Femmina</MenuItem>
                         </Select>
                     </div>
 
@@ -96,8 +95,8 @@ export default function SignInForm() {
                     <div>
                         <InputLabel id="type_label">Tipo di utente</InputLabel>
                         <Select labelId='type_label' label="Tipo di utente" onChange={(e)=>{setValues({...values, type: e.target.value})}} value={values.type}>
-                            <MenuItem value={'doctor'}>Dottore</MenuItem>
-                            <MenuItem value={'patient'}>Paziente</MenuItem>
+                            <MenuItem value={'dottore'}>Dottore</MenuItem>
+                            <MenuItem value={'paziente'}>Paziente</MenuItem>
                         </Select>
                     </div>
                 </CardMedia>
@@ -142,6 +141,7 @@ export default function SignInForm() {
                         </>
                     )}
                 </CardMedia>
+
                 <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
                     <Button 
                         onClick={addPost}
