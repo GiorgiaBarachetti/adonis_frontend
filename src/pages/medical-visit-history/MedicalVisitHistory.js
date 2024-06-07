@@ -3,6 +3,8 @@ import GeneralTable from "../../components/GeneralTable";
 import TooltipItem from "../../components/TooltipItem";
 import {useLocation, useNavigate} from "react-router-dom";
 import {Button} from "@mui/material";
+import axios from "axios";
+import {columnsDoctor, columnsPatient, config} from "../../utils/const";
 
 const MedicalVisitHistory = () => {
     const navigate = useNavigate()
@@ -12,27 +14,32 @@ const MedicalVisitHistory = () => {
     const handleClickNew = () => {
         setOpen(true)
     }
-    const [userType, setUserType] = useState('')
-    //
-    // const getBooking = async () => {
-    //     await axios.get('http://localhost:3333/booking/me', config)
-    //         .then((res) => {
-    //             console.log('res', res.data.data)
-    //             setRows(res.data.data)
-    //
-    //         })
-    // }
-    console.log('medicalhistory', rows)
+    const [userType, setUserType] = useState({})
 
-    const columnsDoctor = [
-        {id: 'patient_id', label: 'Nome Paziente', align: 'left'},
-        {id: 'appointment_day', label: 'Data visita', align: 'left'},
-        // TODO enum --> crea variabili
-        {id: 'appointment_type', label: 'Tipologia', align: 'left'},
-        {id: 'details', label: 'Dettagli', align: 'left'},
-        // TODO enum --> crea variabili
-        {id: 'status', label: 'Stato', align: 'left'}
-    ]
+    const getMe = async () => {
+        await axios.get('http://localhost:3333/users/me', config)
+            .then((res) => {
+                console.log('res', res.data)
+                setUserType(res.data)
+            })
+    }
+
+
+    // const columnsDoctor = [
+    //     {id: 'appointment_day', label: 'Data visita', align: 'left'},
+    //     {id: 'patient_id', label: 'Nome Paziente', align: 'left'},
+    //     // TODO enum --> crea variabili
+    //     {id: 'appointment_type', label: 'Tipologia', align: 'left'},
+    //     {id: 'details', label: 'Dettagli', align: 'left'},
+    // ]
+    //
+    // const columnsPatient = [
+    //     {id: 'edit', label: 'Modifica', align: 'left'},
+    //     {id: 'appointment_day', label: 'Data visita', align: 'left'},
+    //     {id: 'appointment_type', label: 'Tipologia', align: 'left'},
+    //     {id: 'status', label: 'Stato', align: 'left'},
+    //     {id: 'details', label: 'Dettagli', align: 'left'},
+    // ]
 
     const rowsDoctor = [
         {
@@ -75,20 +82,25 @@ const MedicalVisitHistory = () => {
 
     useEffect(() => {
         setRows(location.state.rows)
-        setUserType(sessionStorage.getItem('user'))
-    })
-
-
+        // setUserType(location.state.user)
+        getMe()
+    }, [])
+    console.log(userType)
     return (<>
         {/*<Button onClick={handleClickNew}>New</Button>*/}
         {/*<Form open={open} inputData={inputData} />*/}
         <TooltipItem/>
-        {userType.type === "dottore" ?
+        {userType === "paziente" ?
             <Button onClick={() => {
                 goToForm()
             }}>AGGIUNGI UNA PRENOTAZIONE</Button>
-            : 'copa'
+            : ''
         }
-        <GeneralTable columns={columnsDoctor} rows={rows}/></>)
+        {userType === 'dottore' ?
+            <GeneralTable columns={columnsDoctor} rows={rows}/>
+            :
+            <GeneralTable columns={columnsPatient} rows={rows}/>
+        }
+    </>)
 }
 export default MedicalVisitHistory

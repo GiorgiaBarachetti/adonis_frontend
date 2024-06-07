@@ -3,7 +3,7 @@ import GeneralTable from "../../components/GeneralTable";
 import {Box, Button} from "@mui/material";
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
-import {config} from "../../utils/const";
+import {columnsDoctor, columnsPatient, config} from "../../utils/const";
 import {useEffect, useState} from "react";
 
 const Profile = () => {
@@ -14,21 +14,20 @@ const Profile = () => {
 
     // console.log('location.state.item', location.state.item.patient)
 
-    const bookingCache = sessionStorage.getItem("booking")
+    // const bookingCache = sessionStorage.getItem("booking")
     const getBooking = async () => {
-        if (bookingCache) {
-            setRows(JSON.parse(bookingCache))
-        } else {
-            await axios.get('http://localhost:3333/booking/me', config)
-                .then((res) => {
-                    sessionStorage.setItem("booking", JSON.stringify(res.data.data))
-                    // console.log('res', res.data.data)
-                    setRows(res.data.data)
+        // if (bookingCache) {
+        //     setRows(JSON.parse(bookingCache))
+        // } else {
+        await axios.get('http://localhost:3333/booking/me', config)
+            .then((res) => {
+                sessionStorage.setItem("booking", JSON.stringify(res.data.data))
+                // console.log('res', res.data.data)
+                setRows(res.data.data)
 
-                })
-        }
+            })
+        // }
     }
-    //TODO foreach data for object in array
     const normalizeItem = (item) => {
         console.log('item', item)
         return {
@@ -45,18 +44,23 @@ const Profile = () => {
         // getItem()
         setUser(location.state.item.patient)
         getBooking()
-        // const gay = sessionStorage.getItem('user')
-        // console.log('gay', gay)
     }, [])
 
-
-    const columnsDoctor = [
-        {id: 'appointment_day', label: 'Data visita', align: 'left'},
-        {id: 'patient_id', label: 'Nome Paziente', align: 'left'},
-        // TODO enum --> crea variabili
-        {id: 'appointment_type', label: 'Tipologia', align: 'left'},
-        {id: 'details', label: 'Dettagli', align: 'left'},
-    ]
+    //
+    // const columnsDoctor = [
+    //     {id: 'appointment_day', label: 'Data visita', align: 'left'},
+    //     {id: 'patient_id', label: 'Nome Paziente', align: 'left'},
+    //     // TODO enum --> crea variabili
+    //     {id: 'appointment_type', label: 'Tipologia', align: 'left'},
+    //     {id: 'details', label: 'Dettagli', align: 'left'},
+    // ]
+    // const columnsPatient = [
+    //     {id: 'edit', label: 'Modifica', align: 'left'},
+    //     {id: 'appointment_day', label: 'Data visita', align: 'left'},
+    //     {id: 'appointment_type', label: 'Tipologia', align: 'left'},
+    //     {id: 'status', label: 'Stato', align: 'left'},
+    //     {id: 'details', label: 'Dettagli', align: 'left'},
+    // ]
 
     // const rowsDoctor = [
     //     {
@@ -103,7 +107,6 @@ const Profile = () => {
         // console.log('rows', rows)
     };
 
-    // https://codesandbox.io/p/sandbox/64331095cant-add-a-button-to-every-row-in-material-ui-table-vmnd9?file=%2Fdemo.tsx%3A7%2C17
 
     return (<>
         {/*<TooltipItem*/}
@@ -117,7 +120,7 @@ const Profile = () => {
         <Button onClick={() => goToBookingAppointment()}>vai alla prenotazione</Button>
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around'}}>
             <IdentityCard fields={location.state.item.patient}/>
-            <GeneralTable columns={columnsDoctor} rows={rows}/>
+            <GeneralTable columns={user.type === 'dottore' ? columnsDoctor : columnsPatient} rows={rows}/>
         </Box>
         {/*<Button onClick={() => getItem()}>get</Button>*/}
         {/*<Button onClick={() => navigate('/book-appointment')}>book appointment</Button>*/}

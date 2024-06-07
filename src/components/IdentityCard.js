@@ -15,14 +15,17 @@ const IdentityCard = ({fields}) => {
     //     address: undefined,
     //     telephoneNumber: undefined,
     // }
+    console.log(fields)
 
     return (
         <>
             <Box>
                 <Card sx={{display: 'flex', flexDirection: 'column', width: '550px'}}>
-                    <CardHeader title='DATI PERSONALI'>
-                        <Typography variant="h1">DATI PERSONALI</Typography>
-                    </CardHeader>
+                    {fields.type === 'dottore' ?
+                        <CardHeader title="DATI PERSONALI DOTTORE"/>
+                        :
+                        <CardHeader title="DATI PERSONALI PAZIENTE"/>
+                    }
                     <Divider variant="middle"/>
                     <Box sx={{display: 'flex', flexDirection: 'row'}}>
 
@@ -115,9 +118,7 @@ const IdentityCard = ({fields}) => {
 
                         </CardContent>
                     </Box>
-
                 </Card>
-
             </Box>
         </>
 

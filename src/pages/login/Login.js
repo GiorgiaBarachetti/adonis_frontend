@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState} from 'react';
 import TextField from '@mui/material/TextField';
-import {Button, Card, CardActions, CardContent, CardHeader, Divider, Snackbar} from "@mui/material";
+import {Button, Card, CardActions, CardContent, CardHeader, Divider, Snackbar, Typography} from "@mui/material";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {DATE_FORMAT, fromISOToFormat} from "../../utils/const";
@@ -61,6 +61,10 @@ export default function Login() {
 
     }
 
+    const goToRegister = () => {
+        navigate("/SignIn");
+    }
+
     const normalizeUser = (user) => {
         return {
             // ...user,
@@ -72,30 +76,50 @@ export default function Login() {
         }
     }
     return (
-        <>        <Card sx={{margin: 'auto', width: '550px'}}>
-            <CardHeader sx={{textAlign: 'center'}} title='LOGIN'/>
-            <Divider variant='middle'/>
-            <CardContent
-                sx={{display: 'flex', flexDirection: 'column'}}>
-                <TextField
-                    sx={{marginTop: '10px'}} required id="email" label="Email"
-                    type='email' variant='outlined'
-                    placeholder={"marco@gmail.com"}
-                    onChange={(e) => setUser({...user, email: e.target.value})}
-                />
-                <TextField
-                    required id="password"
-                    label="Password" type='password' variant='outlined'
-                    placeholder={"333"}
-                    onChange={(e) => setUser({...user, password: e.target.value})}
-                />
-            </CardContent>
-            <CardActions>
-                <Button onClick={() => {
-                    getLogin()
-                }} size="small">LOGIN</Button>
-            </CardActions>
-        </Card>
+        <>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+                <Card sx={{margin: 'auto', width: '550px'}}>
+                    <CardHeader sx={{textAlign: 'center'}} title='LOGIN'/>
+                    <Divider variant='middle'/>
+                    <CardContent
+                        sx={{display: 'flex', flexDirection: 'column'}}>
+                        <TextField
+                            sx={{marginTop: '10px'}} required id="email" label="Email"
+                            type='email' variant='outlined'
+                            placeholder={"marco@gmail.com"}
+                            onChange={(e) => setUser({...user, email: e.target.value})}
+                        />
+                        <TextField
+                            required id="password"
+                            label="Password" type='password' variant='outlined'
+                            placeholder={"333"}
+                            onChange={(e) => setUser({...user, password: e.target.value})}
+                        />
+                    </CardContent>
+                    <CardActions style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}>
+                        <Button onClick={() => {
+                            getLogin()
+                        }} size="small">LOGIN</Button>
+                    </CardActions>
+                </Card>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: '20px'
+                }}>
+                    <Typography>Non hai ancora un account? Registrati qui sotto</Typography>
+                    <Button onClick={() => {
+                        goToRegister()
+                    }}>CREA UN ACCOUNT</Button>
+                </div>
+            </div>
             <Snackbar
                 open={snackbar.open}
                 message={snackbar.message}
@@ -161,3 +185,22 @@ export default function Login() {
         "updated_at": "2024-05-03T12:20:31.000+02:00"
     }
 }*/
+
+
+///////////////////////////////////////////////////////////////////////////////////
+//PAZIENTE
+// {
+//     "name": "Nicolò",
+//     "surname": "Mignani",
+//     "sex": "maschio",
+//     "height": 175,
+//     "taxIdCode": "LGVRD50FC8305199",
+//     "telephoneNumber": "+39 322 576 5928",
+//     "birthDate": "2002/08/22",
+//     "birthPlace": "Gandino",
+//     "nationality": "Italia",
+//     "address": "Via Formigli, 3",
+//     "type": "paziente",
+//     "email": "nico.mignani@gmail.com",
+//     "password": "Lu1g1V3rd1"
+// }
