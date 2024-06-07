@@ -56,7 +56,6 @@ export default function SignInForm() {
 
         })
         .then((res) => {
-          setValues({...values, title:'',content:''})
           goToHomepage()
         })
         .catch((err) => {
