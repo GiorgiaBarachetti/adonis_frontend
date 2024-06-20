@@ -45,7 +45,7 @@ const Patient = () => {
         taxIdCode: 'XYZ987654321',
         nationality: 'American',
         address: '456 Elm Street, Los Angeles, CA',
-        telephoneNumber: '+1 987 654 3210',
+        telephone_number: '+1 987 654 3210',
     }
 
     return (<>

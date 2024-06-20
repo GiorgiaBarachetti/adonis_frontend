@@ -3,8 +3,16 @@ import GeneralTable from "../../components/GeneralTable";
 import {Box, Button} from "@mui/material";
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
-import {columnsDoctor, columnsPatient, config} from "../../utils/const";
+import {
+    columnsDoctor,
+    columnsPatient,
+    fromISOToFormat,
+    normalizeUser,
+    REVERT_DATE_FORMAT,
+    rowsDoctor
+} from "../../utils/const";
 import {useEffect, useState} from "react";
+import TooltipItem from "../../components/TooltipItem";
 
 const Profile = () => {
     const navigate = useNavigate()
@@ -12,120 +20,108 @@ const Profile = () => {
     const [user, setUser] = useState({})
     const [rows, setRows] = useState([]);
 
-    // console.log('location.state.item', location.state.item.patient)
-
-    // const bookingCache = sessionStorage.getItem("booking")
     const getBooking = async () => {
-        // if (bookingCache) {
-        //     setRows(JSON.parse(bookingCache))
-        // } else {
+        const token = sessionStorage.getItem('token')
+        const config = {headers: {Authorization: `Bearer ${token}`}}
         await axios.get('http://localhost:3333/booking/me', config)
             .then((res) => {
-                sessionStorage.setItem("booking", JSON.stringify(res.data.data))
-                // console.log('res', res.data.data)
-                setRows(res.data.data)
-
+                setRows(normalizeItem(res.data.data))
             })
-        // }
     }
-    const normalizeItem = (item) => {
-        console.log('item', item)
-        return {
-            // ...user,
-            patient: {
-                ...item.patient,
-                // birth_date: fromISOToFormat(item.patient.birth_date, DATE_FORMAT)
-            },
-            // token:{}
+
+    //todo manca dati di doctor --> data doctor --> non va neanche get singolo user
+    const getDataDoctor = async (id) => {
+        const token = sessionStorage.getItem('token')
+        const config = {headers: {Authorization: `Bearer ${token}`}}
+        // await axios.get(`http://localhost:3333/users/${id}`, config)
+        //     .then((res) => {
+        //         console.log('PROFILE - getbookingresult', res)
+        // setRows(normalizeItem(res.data.data))
+        // })
+    }
+    const deleteStorage = () => {
+        try {
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('user');
+        } catch (error) {
+            console.error(`Failed to remove item with key from sessionStorage`, error);
+        }
+    }
+    const onLogout = async () => {
+        try {
+            const token = sessionStorage.getItem('token');
+            if (!token) {
+                console.error('No token found in sessionStorage');
+                return;
+            }
+
+            const config = {headers: {Authorization: `Bearer ${token}`}};
+            await axios.post('http://localhost:3333/logout', {}, config);
+            deleteStorage()
+            goToLogin();
+        } catch (error) {
+            console.error('Logout failed', error.response || error); // Log the error response for debugging
         }
     }
 
+    const normalizeItem = (item) => {
+        return item.map(it => ({
+            ...it,
+            appointment_day: it.appointment_day ? fromISOToFormat(it.appointment_day, REVERT_DATE_FORMAT) : undefined
+        }));
+    }
+
     useEffect(() => {
-        // getItem()
-        setUser(location.state.item.patient)
+        if (location.state) {
+            setUser(location.state.item.patient)
+        } else {
+            const cache = sessionStorage.getItem('user')
+            const parsed = JSON.parse(cache)
+            const normalized = normalizeUser(parsed)
+            setUser(normalized)
+        }
         getBooking()
+
+        if (user) {
+            // if (user.type === 'dottore') {
+            getDataDoctor(user.id)
+        }
+        // }
     }, [])
 
-    //
-    // const columnsDoctor = [
-    //     {id: 'appointment_day', label: 'Data visita', align: 'left'},
-    //     {id: 'patient_id', label: 'Nome Paziente', align: 'left'},
-    //     // TODO enum --> crea variabili
-    //     {id: 'appointment_type', label: 'Tipologia', align: 'left'},
-    //     {id: 'details', label: 'Dettagli', align: 'left'},
-    // ]
-    // const columnsPatient = [
-    //     {id: 'edit', label: 'Modifica', align: 'left'},
-    //     {id: 'appointment_day', label: 'Data visita', align: 'left'},
-    //     {id: 'appointment_type', label: 'Tipologia', align: 'left'},
-    //     {id: 'status', label: 'Stato', align: 'left'},
-    //     {id: 'details', label: 'Dettagli', align: 'left'},
-    // ]
-
-    // const rowsDoctor = [
-    //     {
-    //         appointmentDay: '2024-04-15',
-    //         patient: 'John Doe',
-    //         appointmentType: 'Controllo generale',
-    //         details: 'Nessun problema riscontrato.',
-    //     },
-    //     {
-    //         appointmentDay: '2024-04-20',
-    //         patient: 'Jane Smith',
-    //         appointmentType: 'Esame del sangue',
-    //         details: 'Esito positivo, nessun problema rilevato.'
-    //     },
-    //     {
-    //         appointmentDay: '2024-04-25',
-    //         patient: 'Michael Johnson',
-    //         appointmentType: 'Visita oculistica',
-    //         details: 'Prescrizione per occhiali da vista.'
-    //     },
-    // ];
-    //
-    // const doctorData = {
-    //     picture: 'https://randomuser.me/api/portraits/men/1.jpg',
-    //     name: 'John',
-    //     surname: 'Doe',
-    //     sex: 'Male',
-    //     birthDate: '1978-05-15',
-    //     birthPlace: 'New York',
-    //     height: '180 cm',
-    //     taxIdCode: 'ABC123456789',
-    //     nationality: 'American',
-    //     address: '123 Main Street, New York, NY',
-    //     telephoneNumber: '+1 123 456 7890',
-    // }
-
-    // const inputData = [{label: 'name', required: true}, {label: 'surname', required: true}]
     const goToMedicalHistoryVisits = () => {
         navigate("/medical-visit-history", {state: {rows}});
-        // console.log('rows', rows)
     };
+
     const goToBookingAppointment = () => {
         navigate("/book-appointment", {state: {rows}});
-        // console.log('rows', rows)
+    };
+    const goToLogin = () => {
+        navigate("/");
     };
 
 
     return (<>
-        {/*<TooltipItem*/}
-        {/*    title={'Benvenuto dottore ' + user?.name + ' ' + user?.surname}*/}
-        {/*    buttonTitle1={'Visite mediche'}*/}
-        {/*    route1={'/medical-visit-history'}*/}
-        {/*    buttonTitle2={'Prenota visita medica'}*/}
-        {/*    route2={'/book-appointment'}*/}
-        {/*/>*/}
+        <TooltipItem/>
         <Button onClick={() => goToMedicalHistoryVisits()}>vai alle visite mediche</Button>
-        <Button onClick={() => goToBookingAppointment()}>vai alla prenotazione</Button>
-        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-around'}}>
-            <IdentityCard fields={location.state.item.patient}/>
-            <GeneralTable columns={user.type === 'dottore' ? columnsDoctor : columnsPatient} rows={rows}/>
+        <Button onClick={() => onLogout()}>LOGOUT</Button>
+        {user.type === 'paziente' ?
+            <Button onClick={() => goToBookingAppointment()}>vai alla prenotazione</Button>
+            : <div></div>}
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+            flexWrap: 'wrap',
+            // '@media (max-width: 1000px)': {
+            //     flexDirection: 'column'
+            // }
+        }}>
+            <IdentityCard fields={user}/>
+            <GeneralTable columns={user.type === 'dottore' ? columnsDoctor : columnsPatient}
+                          rows={user.type === 'dottore' ? rowsDoctor : rows}/>
         </Box>
-        {/*<Button onClick={() => getItem()}>get</Button>*/}
-        {/*<Button onClick={() => navigate('/book-appointment')}>book appointment</Button>*/}
-        {/*<Button onClick={() => navigate('/medical-visit-history')}>medical-visit-history</Button>*/}
-        {/* <Button onClick={handleButtonClick}>Go to Form</Button> */}
         <Outlet/>
     </>)
 }

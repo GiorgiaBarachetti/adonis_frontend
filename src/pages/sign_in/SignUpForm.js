@@ -29,7 +29,7 @@ export default function SignInForm() {
         sex: '',
         height: '',
         taxIdCode: '',
-        telephoneNumber: '',
+        telephone_number: '',
         birthDate: '',
         birthPlace: '',
         nationality: '',
@@ -142,10 +142,10 @@ export default function SignInForm() {
                     <TextField required id="taxIdCode" label="Codice Fiscale" variant='outlined' onChange={(e) => {
                         setValues({...values, taxIdCode: e.target.value})
                     }} value={values.taxIdCode}/>
-                    <TextField required id="telephoneNumber" label="Numero di telefono" variant='outlined'
+                    <TextField required id="telephone_number" label="Numero di telefono" variant='outlined'
                                onChange={(e) => {
-                                   setValues({...values, telephoneNumber: e.target.value})
-                               }} value={values.telephoneNumber}/>
+                                   setValues({...values, telephone_number: e.target.value})
+                               }} value={values.telephone_number}/>
                 </CardMedia>
 
                 <CardMedia

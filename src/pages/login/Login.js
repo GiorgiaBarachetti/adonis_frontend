@@ -4,11 +4,10 @@ import TextField from '@mui/material/TextField';
 import {Button, Card, CardActions, CardContent, CardHeader, Divider, Snackbar, Typography} from "@mui/material";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import {DATE_FORMAT, fromISOToFormat} from "../../utils/const";
+import {normalizeUserForSessionStorage} from "../../utils/const";
 
 export default function Login() {
-    // const params = useParams()
-    // const ciao = useHistory()
+
     const [user, setUser] = useState({email: "", password: ""});
     const navigate = useNavigate();
     // const {setAuth} = useContext(AuthContext);
@@ -26,38 +25,36 @@ export default function Login() {
     * */
 
     const getLogin = async () => {
-        console.log('ciao')
-        await axios.post('http://localhost:3333/login',
-            {email: user.email, password: user.password})
+        try {
+            const res = await axios.post('http://localhost:3333/login',
+                {email: user.email, password: user.password})
             // .then(response => response.json())
             // .then(data => {
             //const accessToken = data.accessToken;
             // Save the access token in a React state or state management system
             // })
-            .then((res) => {
-                normalizeUser(res.data)
-                // const data = await res.json();
-                // console.log(res.data)
-                sessionStorage.setItem('user', JSON.stringify(res.data.patient))
-                sessionStorage.setItem('token', res.data.token.token)
-                // sessionStorage.getItem('token', res.data.token.token)
-                // setSnackbar({open: true, message: "Login success", key: "ciao"})
-                goToHomepage(normalizeUser(res.data))
-                // console.log('normale', normalizeUser(res.data))
-            }).catch((e) => {
-                /*SNACKBAR
-                * if (!err?.response) {
-				setErrMsg('No Server Response');
-			} else if (err.response?.status === 400) {
-				setErrMsg('Missing Username or Password');
-			} else if (err.response?.status === 401) {
-				setErrMsg('Unauthorized');
-			} else {
-				setErrMsg('Login Failed');
-			}*/
-                console.log(e)
-            })
-        // setSnackbar({open: false, message: "", key: ""})
+            // normalizeUser(res.data)
+            // const data = await res.json();
+            // console.log(res.data)
+            sessionStorage.setItem('user', JSON.stringify(res.data.patient))
+            sessionStorage.setItem('token', res.data.token.token)
+            // sessionStorage.getItem('token', res.data.token.token)
+            // setSnackbar({open: true, message: "Login success", key: "ciao"})
+            goToHomepage(normalizeUserForSessionStorage(res.data))
+            // console.log('normale', normalizeUser(res.data))
+        } catch (e) {
+            /*SNACKBAR
+            * if (!err?.response) {
+            setErrMsg('No Server Response');
+        } else if (err.response?.status === 400) {
+            setErrMsg('Missing Username or Password');
+        } else if (err.response?.status === 401) {
+            setErrMsg('Unauthorized');
+        } else {
+            setErrMsg('Login Failed');
+        }*/
+            console.log(e)
+        }
 
     }
 
@@ -65,19 +62,11 @@ export default function Login() {
         navigate("/SignIn");
     }
 
-    const normalizeUser = (user) => {
-        return {
-            // ...user,
-            patient: {
-                ...user.patient,
-                birth_date: fromISOToFormat(user.patient.birth_date, DATE_FORMAT)
-            },
-            // token:{}
-        }
-    }
     return (
         <>
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+                luigiverdi@gmail.com
+                Lu1g1V3rd1
                 <Card sx={{margin: 'auto', width: '550px'}}>
                     <CardHeader sx={{textAlign: 'center'}} title='LOGIN'/>
                     <Divider variant='middle'/>

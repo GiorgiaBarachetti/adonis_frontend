@@ -2,21 +2,6 @@ import {Box, Card, CardContent, CardHeader, CardMedia, Divider, Typography} from
 
 const IdentityCard = ({fields}) => {
 
-    // const item = {
-    //     picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3PNNRDmwDV_an6mG4zJJyuV3ixJDdEDnIeq_jgXR_RmGHc4qGFI8Fkg2dPq3qcoD_ir0&usqp=CAU',
-    //     name: undefined,
-    //     surname: undefined,
-    //     sex: undefined,
-    //     birthDate: undefined,
-    //     birthPlace: undefined,
-    //     height: undefined,
-    //     taxIdCode: undefined,
-    //     nationality: undefined,
-    //     address: undefined,
-    //     telephoneNumber: undefined,
-    // }
-    console.log(fields)
-
     return (
         <>
             <Box>
@@ -96,7 +81,7 @@ const IdentityCard = ({fields}) => {
                                 </Box>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
                                     <Typography sx={{color: 'grey'}}>Telefono</Typography>
-                                    <Typography>{fields.telephoneNumber}</Typography>
+                                    <Typography>{fields.telephone_number}</Typography>
                                 </Box>
                             </Box>
                             {/*TODO show only if is medico*/}
