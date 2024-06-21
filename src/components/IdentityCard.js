@@ -93,11 +93,11 @@ const IdentityCard = ({fields}) => {
                             }}>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
                                     <Typography sx={{color: 'grey'}}>Specializzazione</Typography>
-                                    <Typography>{fields.name}</Typography>
+                                    <Typography>{fields.specalization}</Typography>
                                 </Box>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
                                     <Typography sx={{color: 'grey'}}>Ambulatorio</Typography>
-                                    <Typography>{fields.name}</Typography>
+                                    <Typography>{fields.clinic_number}</Typography>
                                 </Box>
                             </Box>
 
