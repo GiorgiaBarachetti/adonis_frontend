@@ -96,7 +96,9 @@ const Form = () => {
         const cache = sessionStorage.getItem("user")
         const cacheParsed = JSON.parse(cache)
         setUser(normalizeItem(cacheParsed))
-        if (location.state.row) {
+
+        
+    if (location.state?.row) {
             console.log('FORM- USEFFECT - location', location.state.row)
             setFormData(location.state.row)
             setEdit(true)
