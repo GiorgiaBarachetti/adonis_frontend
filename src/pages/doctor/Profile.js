@@ -33,11 +33,6 @@ const Profile = () => {
     const getDataDoctor = async (id) => {
         const token = sessionStorage.getItem('token')
         const config = {headers: {Authorization: `Bearer ${token}`}}
-        // await axios.get(`http://localhost:3333/users/${id}`, config)
-        //     .then((res) => {
-        //         console.log('PROFILE - getbookingresult', res)
-        // setRows(normalizeItem(res.data.data))
-        // })
     }
     const deleteStorage = () => {
         try {
