@@ -240,13 +240,8 @@ export default function SignInForm() {
                         Submit
                     </Button>
                 </Box>
-
             </Box>
-
-
         </Card>
-
-
     );
 }
 
