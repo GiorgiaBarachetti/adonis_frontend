@@ -6,7 +6,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import {DATE_FORMAT, fromISOToFormat} from "../../utils/const";
 import {Box, Button, Card, CardHeader, CardMedia, Divider, Typography} from "@mui/material";
 
 export default function SignInForm() {
@@ -161,13 +160,8 @@ export default function SignInForm() {
                         Submit
                     </Button>
                 </Box>
-                
             </Box>
-
-
         </Card>
-
-
     );
 }
 
