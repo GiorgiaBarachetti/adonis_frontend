@@ -274,6 +274,16 @@ const Form = () => {
                         onChange={(e) => setFormData({...formData, details: e.target.value})}
                         sx={{m: 1, width: '25ch'}}
                     />
+                    <TextField
+                        name="doctor_id"
+                        required
+                        label="ID del dottore"
+                        multiline
+                        rows={4}
+                        value={formData.doctor_id || ""}
+                        onChange={(e) => setFormData({...formData, doctor_id: e.target.value})}
+                        sx={{m: 1, width: '25ch'}}
+                    />
                 </Box>
                 <Box sx={{display: 'flex', justifyContent: 'center'}}>
                     <Button type="submit" variant="contained" color="primary" sx={{m: 1}}>
