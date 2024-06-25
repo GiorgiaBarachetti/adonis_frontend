@@ -14,16 +14,7 @@ const Form = () => {
     // const [users, setUsers] = useState([]);
     const location = useLocation();
     const [edit, setEdit] = useState(false);
-
-    // //TODO fai get doctors
-    // const getUsers = async () => {
-    //     await axios.get('http://localhost:3333/users')
-    //         .then((res) => {
-    //             console.log(res.data)
-    //             setUsers(res.data)
-    //         })
-    // }
-
+    
 
     const navigate = useNavigate();
     const goToHomepage = () => {
@@ -97,7 +88,7 @@ const Form = () => {
         const cacheParsed = JSON.parse(cache)
         setUser(normalizeItem(cacheParsed))
 
-        
+
     if (location.state?.row) {
             console.log('FORM- USEFFECT - location', location.state.row)
             setFormData(location.state.row)

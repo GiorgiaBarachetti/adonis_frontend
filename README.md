@@ -83,16 +83,12 @@ This section has moved
 here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 LOGIN DETAILS
-PATIENT
+DOTTORE
 luigiverdi@gmail.com
 Lu1g1V3rd1
-
-DOCTOR
-marco@gmail.com
-333
-
-dominga@gmail.com
-C1aociao.?
+PAZIENTE
+giorgiabara@gmail.com
+Gio5gio.'
 
 TODO
 fai lista fittizia per dottore delle visite bokkingate

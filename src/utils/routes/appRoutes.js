@@ -4,14 +4,17 @@ import Form from "../../components/Form";
 import MedicalVisitHistory from "../../pages/medical-visit-history/MedicalVisitHistory";
 import SignUpForm from "../../pages/sign_in/SignUpForm";
 import Login from "../../pages/login/Login";
+import PrivateRoute from "../../pages/auth/PrivateRoute";
 
 const AppRoutes = () => {
     return (
         <Routes>
             <Route path="/" element={<Login/>}/>
-            <Route path="/profile" element={<Profile/>}/>
-            <Route path="/book-appointment" element={<Form/>}/>
-            <Route path="/medical-visit-history" element={<MedicalVisitHistory/>}/>
+            <Route element={<PrivateRoute/>}>
+                <Route path="/profile" element={<Profile/>}/>
+                <Route path="/book-appointment" element={<Form/>}/>
+                <Route path="/medical-visit-history" element={<MedicalVisitHistory/>}/>
+            </Route>
             <Route path="/SignIn" element={<SignUpForm/>}/>
         </Routes>
     )
