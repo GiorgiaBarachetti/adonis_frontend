@@ -1,28 +1,35 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, MenuItem, TextField, Typography} from "@mui/material";
+import {Box, Button, IconButton, MenuItem, TextField, Typography} from "@mui/material";
 import TooltipItem from "./TooltipItem";
 import {fromFormatToISO, fromISOToFormat, REVERT_DATE_FORMAT} from "../utils/const";
 import axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useSnackbar} from "./SnackbarContext.js";
+import {ArrowBack} from "@mui/icons-material";
+
 
 const Form = () => {
     const {showSnackbar} = useSnackbar();
 
     const [formData, setFormData] = useState({});
     const [user, setUser] = useState({})
-    // const [users, setUsers] = useState([]);
+    const [doctors, setDoctors] = useState([]);
     const location = useLocation();
     const [edit, setEdit] = useState(false);
-    
-
     const navigate = useNavigate();
+
     const goToHomepage = () => {
-        console.log('FORM - GOTOHOMEPAGE - gay ultimo', formData)
         navigate("/profile");
-        // history.replace("/book-appointment");
     };
 
+    const getDoctors = async () => {
+        const token = sessionStorage.getItem('token')
+        const config = {headers: {Authorization: `Bearer ${token}`}}
+        const res = await axios.get('http://localhost:3333/users', config);
+        const allUsers = res.data.data;
+        const filteredDoctors = allUsers.filter(user => user.type === 'dottore');
+        setDoctors(filteredDoctors);
+    }
     const handleSubmit = async (e) => {
         const token = sessionStorage.getItem('token')
         const config = {headers: {Authorization: `Bearer ${token}`}}
@@ -39,8 +46,9 @@ const Form = () => {
             setFormData({});
 
         } else {
+            console.log(formData)
             e.preventDefault();
-            await axios.post('http://localhost:3333/booking/', formData, config)
+            await axios.post('http://localhost:3333/booking/', normalizeItemBeforeUpdate(formData), config)
                 .then((res) => {
                     showSnackbar("Visita prenotata con successo", "success");
                     goToHomepage()
@@ -65,10 +73,13 @@ const Form = () => {
     };
 
     const normalizeItemBeforeUpdate = (item) => {
+        console.log(item.doctor_id)
         return {
             ...item,
             appointmentDay: item.appointment_day ? fromFormatToISO(item.appointment_day, REVERT_DATE_FORMAT) : undefined,
-            appointmentType: item.appointment_type ? item.appointment_type : item.appointment_type
+            appointmentType: item.appointment_type ? item.appointment_type : item.appointment_type,
+            doctorId: item.doctor_id ? item.doctor_id : undefined
+            // doctor_id: item.doctor_id ? item.doctor_id : undefined
         }
     }
 
@@ -84,6 +95,7 @@ const Form = () => {
     }
 
     useEffect(() => {
+        getDoctors()
         const cache = sessionStorage.getItem("user")
         const cacheParsed = JSON.parse(cache)
         setUser(normalizeItem(cacheParsed))
@@ -98,9 +110,20 @@ const Form = () => {
         }
     }, [])
 
+    const goBack = () => {
+        navigate("/medical-visit-history");
+    };
+
+    const backButtons = (
+        <>
+            <IconButton style={{color : "white"}} onClick={goBack}>
+                <ArrowBack />
+            </IconButton>
+        </>);
+
     return (
         <>
-            <TooltipItem/>
+            <TooltipItem back={backButtons} title={edit ? "Modifica visita medica" : "Nuova visita medica"}/>
             <Box
                 component="form"
                 sx={{
@@ -217,44 +240,21 @@ const Form = () => {
                             shrink: true,
                         }} sx={{m: 1, width: '25ch'}}
                     />
-                    {/*<LocalizationProvider dateAdapter={AdapterDayjs}>*/}
-                    {/*    <DatePicker*/}
-                    {/*        name="appointmentDay"*/}
-                    {/*        label="Controlled picker"*/}
-                    {/*        value={formData.appointment_day ? dayjs(formData.appointment_day) : null}*/}
-                    {/*        onChange={(newValue) => setFormData({*/}
-                    {/*            ...formData,*/}
-                    {/*            appointment_day: newValue ? newValue : null*/}
-                    {/*        })}*/}
-                    {/*        renderInput={(params) => <TextField {...params} />}*/}
-                    {/*    />*/}
-                    {/*</LocalizationProvider>*/}
-                    {/*<TextField*/}
-                    {/*    disabled*/}
-                    {/*    name="appointment_day"*/}
-                    {/*    required*/}
-                    {/*    label="hh"*/}
-                    {/*    type="string"*/}
-                    {/*    value={formData.appointment_day || "niente"}*/}
-                    {/*/>*/}
-                    {/*<LocalizationProvider dateAdapter={AdapterDayjs}>*/}
-                    {/*    <DemoItem label="Static variant">*/}
-                    {/*        <StaticDatePicker/>*/}
-                    {/*    </DemoItem>*/}
-                    {/*</LocalizationProvider>*/}
-                    {/*<TextField*/}
-                    {/*    select*/}
-                    {/*    name="doctor"*/}
-                    {/*    required*/}
-                    {/*    label="Dottore"*/}
-                    {/*    value={formData.doctor || ""}*/}
-                    {/*    onChange={(e) => setFormData({...formData, appointment_day: e.target.value})}*/}
-
-                    {/*>*/}
-                    {/*    {doctorOptions.map((option, index) => (*/}
-                    {/*        <MenuItem key={index} value={option}>{option}</MenuItem>*/}
-                    {/*    ))}*/}
-                    {/*</TextField>*/}
+                    <TextField
+                        select
+                        name="doctor_id"
+                        required
+                        label="Dottore"
+                        value={formData.doctor_id || ""}
+                        onChange={(e) => setFormData({ ...formData, doctor_id: e.target.value })}
+                        sx={{ m: 1, width: '25ch' }}
+                    >
+                        {doctors.map((doctor) => (
+                            <MenuItem key={doctor.id} value={doctor.id}>
+                                {`${doctor.name} ${doctor.surname}`}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                     <TextField
                         name="details"
                         required
@@ -265,25 +265,15 @@ const Form = () => {
                         onChange={(e) => setFormData({...formData, details: e.target.value})}
                         sx={{m: 1, width: '25ch'}}
                     />
-                    <TextField
-                        name="doctor_id"
-                        required
-                        label="ID del dottore"
-                        multiline
-                        rows={4}
-                        value={formData.doctor_id || ""}
-                        onChange={(e) => setFormData({...formData, doctor_id: e.target.value})}
-                        sx={{m: 1, width: '25ch'}}
-                    />
                 </Box>
                 <Box sx={{display: 'flex', justifyContent: 'center'}}>
                     <Button type="submit" variant="contained" color="primary" sx={{m: 1}}>
-                        Submit
+                        SALVA
                     </Button>
                     {edit && (
                         <Button
                             variant="contained"
-                            color="secondary"
+                            style={{backgroundColor:"red"}}
                             onClick={deleteBookAppointment}
                             sx={{m: 1}}
                         >

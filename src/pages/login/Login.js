@@ -5,24 +5,18 @@ import {Button, Card, CardActions, CardContent, CardHeader, Divider, Snackbar, T
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {normalizeUserForSessionStorage} from "../../utils/const";
+import {useSnackbar} from "../../components/SnackbarContext.js";
 
 export default function Login() {
-
+    const {showSnackbar} = useSnackbar();
     const [user, setUser] = useState({email: "", password: ""});
     const navigate = useNavigate();
-    // const {setAuth} = useContext(AuthContext);
-    // const userRef = useRef();
-    // const errRef = useRef();
 
-    const [snackbar, setSnackbar] = useState({open: false, message: "", key: ""});
     const goToHomepage = (item) => {
         navigate("/profile", {state: {item: item}});
         // history.replace("/book-appointment");
     };
-    /*
-    https://medium.com/@aqeel_ahmad/handling-jwt-access-token-refresh-token-using-axios-in-react-react-native-app-2024-f452c96a83fc
-    https://github.com/marvelken/login-and-registration/blob/master/src/Login.js
-    * */
+
 
     const getLogin = async () => {
         try {
@@ -38,11 +32,15 @@ export default function Login() {
             // console.log(res.data)
             sessionStorage.setItem('user', JSON.stringify(res.data.patient))
             sessionStorage.setItem('token', res.data.token.token)
+            showSnackbar("Login effettuato con successo", "success");
+
             // sessionStorage.getItem('token', res.data.token.token)
             // setSnackbar({open: true, message: "Login success", key: "ciao"})
             goToHomepage(normalizeUserForSessionStorage(res.data))
             // console.log('normale', normalizeUser(res.data))
         } catch (e) {
+            showSnackbar("Errore nella login, ritenta", "error");
+
             /*SNACKBAR
             * if (!err?.response) {
             setErrMsg('No Server Response');
@@ -65,10 +63,14 @@ export default function Login() {
     return (
         <>
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+                PAZIENTE
                 luigiverdi@gmail.com
-                Lu1g1V3rd1
+                Lu1g1V3rd1.
+                DOTTORE
+                giorgiabara@gmail.com
+                Gio5gio.'
                 <Card sx={{margin: 'auto', width: '550px'}}>
-                    <CardHeader sx={{textAlign: 'center'}} title='LOGIN'/>
+                    <CardHeader sx={{backgroundColor: "#f5f5f5",textAlign: 'center'}} title='LOGIN'/>
                     <Divider variant='middle'/>
                     <CardContent
                         sx={{display: 'flex', flexDirection: 'column'}}>
@@ -80,6 +82,7 @@ export default function Login() {
                         />
                         <TextField
                             required id="password"
+                            sx={{marginTop: '10px'}}
                             label="Password" type='password' variant='outlined'
                             placeholder={"333"}
                             onChange={(e) => setUser({...user, password: e.target.value})}
@@ -109,11 +112,6 @@ export default function Login() {
                     }}>CREA UN ACCOUNT</Button>
                 </div>
             </div>
-            <Snackbar
-                open={snackbar.open}
-                message={snackbar.message}
-                key={snackbar.key}
-            />
         </>
     );
 }
@@ -137,7 +135,7 @@ export default function Login() {
         "updated_at": "2024-05-03T12:20:31.398+02:00",
         "id": 1
     },
-    "doctor": {
+    "profile": {
         "doctor_id": 1,
         "specalization": "pediatra",
         "clinic_number": 12,

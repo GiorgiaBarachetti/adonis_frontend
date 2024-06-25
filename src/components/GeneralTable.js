@@ -1,5 +1,7 @@
 import {useState} from 'react';
+import SearchIcon from '@mui/icons-material/Search';
 import {
+    InputAdornment,
     Table,
     TableBody,
     TableCell,
@@ -51,10 +53,10 @@ const GeneralTable = ({columns, rows}) => {
     const paginatedRows = filteredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column'}}>
+        <div  sx={{maxWidth: 650, '@media (max-width: 1000px)': {minWidth: '100%'}, display: 'flex', flexDirection: 'column'}}>
             <TableContainer>
-                <Table sx={{maxWidth: 650, '@media (max-width: 1000px)': {minWidth: '100%'}}} aria-label="simple table">
-                    <TableHead>
+                <Table aria-label="simple table">
+                    <TableHead style={{backgroundColor: "#f5f5f5"}}>
                         <TableRow>
                             {columns.map((column) => (
                                 <TableCell key={column.id}>
@@ -62,7 +64,14 @@ const GeneralTable = ({columns, rows}) => {
                                     <TextField
                                         size="small"
                                         variant="standard"
-                                        placeholder={`Filter ${column.label}`}
+                                        placeholder={`Cerca`}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <SearchIcon />
+                                                </InputAdornment>
+                                            ),
+                                        }}
                                         value={filters[column.id] || ''}
                                         onChange={(e) => handleFilterChange(column.id, e.target.value)}
                                         fullWidth

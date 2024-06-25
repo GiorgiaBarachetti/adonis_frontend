@@ -189,6 +189,7 @@ export const rowsDoctor = [
 export const columnsPatient = [
     {id: 'appointment_day', label: 'Data visita', align: 'left'},
     {id: 'appointment_type', label: 'Tipologia', align: 'left'},
+    {id: 'doctor_id', label: 'Dottore', align: 'left'},
     {id: 'status', label: 'Stato', align: 'left'},
     {id: 'details', label: 'Dettagli', align: 'left'},
 ]

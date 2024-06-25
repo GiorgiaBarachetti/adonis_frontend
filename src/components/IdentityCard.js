@@ -7,14 +7,12 @@ const IdentityCard = ({fields}) => {
             <Box>
                 <Card sx={{display: 'flex', flexDirection: 'column', width: '550px'}}>
                     {fields.type === 'dottore' ?
-                        <CardHeader title="DATI PERSONALI DOTTORE"/>
+                        <CardHeader style={{backgroundColor: "#f5f5f5"}} title="DATI PERSONALI DOTTORE"/>
                         :
-                        <CardHeader title="DATI PERSONALI PAZIENTE"/>
+                        <CardHeader style={{backgroundColor: "#f5f5f5"}} title="DATI PERSONALI PAZIENTE"/>
                     }
-                    <Divider variant="middle"/>
+                    <Divider />
                     <Box sx={{display: 'flex', flexDirection: 'row'}}>
-
-                        {/*TODO*/}
                         <CardMedia
                             sx={{height: 140}}
                             image="{{item.image}}"
@@ -71,11 +69,11 @@ const IdentityCard = ({fields}) => {
                                 justifyContent: 'space-between',
                                 margin: '5px'
                             }}>
-                                <Box sx={{display: 'flex', flexDirection: 'column'}}>
+                                <Box sx={{display: 'flex', flexDirection: 'column', marginRight: '10px'}}>
                                     <Typography sx={{color: 'grey'}}>Cittadinanza</Typography>
                                     <Typography>{fields.nationality}</Typography>
                                 </Box>
-                                <Box sx={{display: 'flex', flexDirection: 'column'}}>
+                                <Box sx={{display: 'flex', flexDirection: 'column', marginRight: '10px'}}>
                                     <Typography sx={{color: 'grey'}}>Indirizzo</Typography>
                                     <Typography>{fields.address}</Typography>
                                 </Box>
@@ -84,7 +82,7 @@ const IdentityCard = ({fields}) => {
                                     <Typography>{fields.telephone_number}</Typography>
                                 </Box>
                             </Box>
-                            {/*TODO show only if is medico*/}
+                            {fields.type === 'dottore' ?
                             <Box sx={{
                                 display: 'flex',
                                 flexDirection: 'row',
@@ -100,7 +98,7 @@ const IdentityCard = ({fields}) => {
                                     <Typography>{fields.dataDoctor?.clinic_number}</Typography>
                                 </Box>
                             </Box>
-
+: <></>}
                         </CardContent>
                     </Box>
                 </Card>

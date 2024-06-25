@@ -1,6 +1,6 @@
 import IdentityCard from "../../components/IdentityCard";
 import GeneralTable from "../../components/GeneralTable";
-import {Box, Button} from "@mui/material";
+import {Box, Button, Grid} from "@mui/material";
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {
@@ -13,8 +13,11 @@ import {
 } from "../../utils/const";
 import {useEffect, useState} from "react";
 import TooltipItem from "../../components/TooltipItem";
+import {useSnackbar} from "../../components/SnackbarContext.js";
 
 const Profile = () => {
+    const {showSnackbar} = useSnackbar();
+
     const navigate = useNavigate()
     const location = useLocation();
     const [user, setUser] = useState({})
@@ -29,16 +32,6 @@ const Profile = () => {
             })
     }
 
-    //todo manca dati di doctor --> data doctor --> non va neanche get singolo user
-    const getDataDoctor = async (id) => {
-        const token = sessionStorage.getItem('token')
-        const config = {headers: {Authorization: `Bearer ${token}`}}
-        // await axios.get(`http://localhost:3333/users/${id}`, config)
-        //     .then((res) => {
-        //         console.log('PROFILE - getbookingresult', res)
-        // setRows(normalizeItem(res.data.data))
-        // })
-    }
     const deleteStorage = () => {
         try {
             sessionStorage.removeItem('token');
@@ -57,9 +50,13 @@ const Profile = () => {
 
             const config = {headers: {Authorization: `Bearer ${token}`}};
             await axios.post('http://localhost:3333/logout', {}, config);
+            showSnackbar("Logout effettuato con successo", "success");
             deleteStorage()
             goToLogin();
+
         } catch (error) {
+            showSnackbar("Errore nel logout", "error");
+
             console.error('Logout failed', error.response || error); // Log the error response for debugging
         }
     }
@@ -81,12 +78,6 @@ const Profile = () => {
             setUser(normalized)
         }
         getBooking()
-
-        if (user) {
-            // if (user.type === 'dottore') {
-            getDataDoctor(user.id)
-        }
-        // }
     }, [])
 
     const goToMedicalHistoryVisits = () => {
@@ -100,30 +91,38 @@ const Profile = () => {
         navigate("/");
     };
 
+    const buttons = (
+        <>
+            {user.type === 'paziente' ?
+                <Button style={{color: 'white'}} onClick={() => goToBookingAppointment()}>vai alla prenotazione</Button>
+                : <></>}
+        <Button style={{color: 'white'}} onClick={() => goToMedicalHistoryVisits()}>vai alle visite mediche</Button>
+    </>)
+    const logout = (
+        <Button style={{color: 'white', fontSize: 'bold'}} onClick={() => onLogout()}>LOGOUT</Button>)
+
 
     return (<>
-        <TooltipItem/>
-        <Button onClick={() => goToMedicalHistoryVisits()}>vai alle visite mediche</Button>
-        <Button onClick={() => onLogout()}>LOGOUT</Button>
-        {user.type === 'paziente' ?
-            <Button onClick={() => goToBookingAppointment()}>vai alla prenotazione</Button>
-            : <div></div>}
-        <Box sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-            flexWrap: 'wrap',
-            // '@media (max-width: 1000px)': {
-            //     flexDirection: 'column'
-            // }
-        }}>
-            <IdentityCard fields={user}/>
-            <GeneralTable columns={user.type === 'dottore' ? columnsDoctor : columnsPatient}
-                          rows={user.type === 'dottore' ? rowsDoctor : rows}/>
-        </Box>
+        <TooltipItem title="Profilo" children={buttons} logout={logout}/>
+        {/*<Button onClick={() => goToMedicalHistoryVisits()}>vai alle visite mediche</Button>*/}
+        {/*<Button onClick={() => onLogout()}>LOGOUT</Button>*/}
+
+            <Box sx={{p:'0 40px 0 40px'}}>
+            <Grid container spacing={3} justifyContent="center" alignItems="center">
+                <Grid item xs={12} md={6} container justifyContent="center">
+                    <IdentityCard fields={user} />
+                </Grid>
+                <Grid item xs={12} lg={6} container justifyContent="center">
+                    <GeneralTable
+                        columns={user.type === 'dottore' ? columnsDoctor : columnsPatient}
+                        rows={user.type === 'dottore' ? rows : rows}
+                    />
+                </Grid>
+            </Grid>
+            </Box>
         <Outlet/>
-    </>)
+    </>
+)
 }
 
 export default Profile;

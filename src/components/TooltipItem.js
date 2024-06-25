@@ -1,27 +1,27 @@
-import {AppBar, IconButton, Toolbar, Typography} from "@mui/material";
+import {AppBar, IconButton, Toolbar, Tooltip, Typography} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {useNavigate} from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
 
-const TooltipItem = ({title, buttonTitle1, route1, buttonTitle2, route2}) => {
-    const navigate = useNavigate()
+const TooltipItem = (props) => {
+    const cache = sessionStorage.getItem("user")
+    const user = JSON.parse(cache)
+    const initials = user ? `${user.name.charAt(0)}${user.surname.charAt(0)}` : '';
     return (<>
         <AppBar positionn='static'>
             <Toolbar>
-
+                {props.back
+                    ?
+                    <div style={{marginRight:'10px'}}>{props.back}</div>
+                : <></>}
                 <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                    {title}
+                    {props.title}
                 </Typography>
-                {/*<Button onClick={() => navigate(`${route1}`)} color="inherit">{buttonTitle1}</Button>*/}
-                {/*<Button onClick={() => navigate(`${route2}`)} color="inherit">{buttonTitle2}</Button>*/}
-                <IconButton
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="menu"
-                    sx={{ml: 2}}
-                >
-                    <MenuIcon/>
-                </IconButton>
+                {props.children}
+                <Tooltip title={`${user.name} ${user.surname}`}>
+                    <Avatar sx={{ marginLeft: '20px',bgcolor: 'purple' }}>{initials}</Avatar>
+                </Tooltip>
+                {props.logout}
             </Toolbar>
         </AppBar>
     </>)

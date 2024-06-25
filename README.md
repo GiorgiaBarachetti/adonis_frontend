@@ -85,10 +85,12 @@ here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-
 LOGIN DETAILS
 DOTTORE
 luigiverdi@gmail.com
-Lu1g1V3rd1
+Lu1g1V3rd1.
 PAZIENTE
 giorgiabara@gmail.com
 Gio5gio.'
 
+domipeci@gmail.com
+123456uixL.
 TODO
 fai lista fittizia per dottore delle visite bokkingate

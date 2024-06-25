@@ -9,6 +9,7 @@ import {useNavigate} from "react-router-dom";
 import {Box, Button, Card, CardHeader, CardMedia, Divider, Typography} from "@mui/material";
 import * as Yup from 'yup';
 import YupPassword from 'yup-password';
+import {fromFormatToISO, REVERT_DATE_FORMAT} from "../../utils/const";
 
 YupPassword(Yup);
 export default function SignInForm() {
@@ -62,7 +63,7 @@ export default function SignInForm() {
                 height: values.height,
                 taxIdCode: values.taxIdCode,
                 telephoneNumber: values.telephoneNumber,
-                birthDate: values.birthDate,
+                birthDate: values.birthDate ? fromFormatToISO(values.birthDate, REVERT_DATE_FORMAT) : null,
                 birthPlace: values.birthPlace,
                 nationality: values.nationality,
                 address: values.address,
@@ -91,9 +92,8 @@ export default function SignInForm() {
     })
 
     return (
-
         <Card sx={{margin: 'auto', width: '550px'}}>
-            <CardHeader sx={{backgroundColor: '#32de84'}} title='DATI PERSONALI'>
+            <CardHeader sx={{backgroundColor: 'primary'}} title='DATI PERSONALI'>
                 <Typography variant="h1">Inserimento dati utente</Typography>
             </CardHeader>
             <Divider variant='middle'/>
@@ -264,7 +264,7 @@ export default function SignInForm() {
         "updated_at": "2024-05-03T12:20:31.398+02:00",
         "id": 1
     },
-    "doctor": {
+    "profile": {
         "doctor_id": 1,
         "specalization": "pediatra",
         "clinic_number": 12,
