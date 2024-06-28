@@ -62,7 +62,7 @@ export default function SignInForm() {
                 sex: values.sex,
                 height: values.height,
                 taxIdCode: values.taxIdCode,
-                telephoneNumber: values.telephoneNumber,
+                telephone_number: values.telephone_number,
                 birthDate: values.birthDate ? fromFormatToISO(values.birthDate, REVERT_DATE_FORMAT) : null,
                 birthPlace: values.birthPlace,
                 nationality: values.nationality,
