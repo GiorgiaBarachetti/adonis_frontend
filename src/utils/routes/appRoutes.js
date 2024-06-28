@@ -5,6 +5,7 @@ import MedicalVisitHistory from "../../pages/medical-visit-history/MedicalVisitH
 import SignUpForm from "../../pages/sign_in/SignUpForm";
 import Login from "../../pages/login/Login";
 import PrivateRoute from "../../pages/auth/PrivateRoute";
+import EditUser from "../../components/EditUser";
 
 const AppRoutes = () => {
     return (
@@ -15,6 +16,7 @@ const AppRoutes = () => {
                 <Route path="/profile" element={<Profile/>}/>
                 <Route path="/book-appointment" element={<Form/>}/>
                 <Route path="/medical-visit-history" element={<MedicalVisitHistory/>}/>
+                <Route path="/edit-user" element={<EditUser/>}/>
             </Route>
         </Routes>
     )

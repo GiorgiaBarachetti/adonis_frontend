@@ -1,6 +1,26 @@
 import {Box, Card, CardContent, CardHeader, CardMedia, Divider, Typography} from "@mui/material";
+import axios from "axios";
+import {useEffect, useState} from "react";
+import {fromISOToFormat, REVERT_DATE_FORMAT} from "../utils/const";
 
-const IdentityCard = ({fields}) => {
+const IdentityCard = ({}) => {
+    const [fields, setFields] = useState({});
+    const getME = async () => {
+        const token = sessionStorage.getItem('token')
+        const config = {headers: {Authorization: `Bearer ${token}`}}
+        const res = await axios.get('http://localhost:3333/users/me', config);
+        setFields(normalizeItem(res.data))
+    }
+    const normalizeItem = (item) => {
+        return {
+            ...item,
+            birth_date: item.birth_date ? fromISOToFormat(item.birth_date, REVERT_DATE_FORMAT) : ''
+        }
+    }
+
+    useEffect(() => {
+        getME()
+    }, [])
     return (
         <Box>
             <Card sx={{display: 'flex', flexDirection: 'column', width: '550px'}}>
@@ -92,7 +112,7 @@ const IdentityCard = ({fields}) => {
                             }}>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
                                     <Typography sx={{color: 'grey'}}>Specializzazione</Typography>
-                                    <Typography>{fields.dataDoctor?.specialization}</Typography>
+                                    <Typography>{fields.dataDoctor?.specalization}</Typography>
                                 </Box>
                                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
                                     <Typography sx={{color: 'grey'}}>Ambulatorio</Typography>

@@ -113,15 +113,19 @@ const Profile = () => {
         navigate("/");
     };
 
+    const goToEdit = () => {
+        navigate("/edit-user", {state: {user}});
+    };
+
     const buttons = (
         <>
             {user.type === 'paziente' ?
                 <Button style={{ color: 'white' }} onClick={() => goToBookingAppointment()}>vai alla prenotazione</Button>
                 : <></>}
             <Button style={{ color: 'white' }} onClick={() => goToMedicalHistoryVisits()}>vai alle visite mediche</Button>
-        </>
+        <Button style={{color: 'white'}} onClick={() => goToEdit()}>modifica profilo</Button>
+    </>
     );
-
     const logout = (
         <>
             <Button style={{ color: 'white', fontWeight: 'bold' }} onClick={() => onLogout()}>LOGOUT</Button>
@@ -135,7 +139,7 @@ const Profile = () => {
             <Box sx={{ p: '0 40px 0 40px' }}>
                 <Grid container spacing={3} justifyContent="center" alignItems="center">
                     <Grid item xs={12} md={6} container justifyContent="center">
-                        <IdentityCard fields={user} />
+                        <IdentityCard />
                     </Grid>
                     <Grid item xs={12} lg={6} container justifyContent="center">
                         <GeneralTable
